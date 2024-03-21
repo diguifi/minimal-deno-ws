@@ -1,0 +1,1 @@
+export * as flags from "https://deno.land/std@0.212.0/flags/mod.ts"
