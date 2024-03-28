@@ -215,7 +215,7 @@ export class ClientHandler {
       try {
         const enc = new TextDecoder("utf-8");
         const arr = m.data;
-        const eventDataString = m.data
+        const eventDataString = enc.decode(arr)
 
         const eventData = this.parseEventDataString(eventDataString);
         switch (+eventData[0]) {
