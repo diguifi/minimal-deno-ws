@@ -1,9 +1,9 @@
 export class PlayResult {
-  public turn: number
+  public bothPlayed: boolean
   public winner: number
 
-  constructor(turn: number, winner: number) {
-      this.turn = turn
+  constructor(bothPlayed: boolean, winner: number) {
+      this.bothPlayed = bothPlayed
       this.winner = winner
   }
 }

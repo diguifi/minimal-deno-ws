@@ -68,22 +68,27 @@ export class ClientHandler {
     }
   }
 
-  private play(player: Player) {
+  private play(player: Player, playerChoice: number) {
     try {
-      console.log(`player ${player.id} playing move at room ${player.room?.id}....`)
+      const hand = playerChoice == 1 ? 'rock' : playerChoice == 2 ? 'paper' : 'scissors'
+      console.log(`player ${player.id} playing ${hand} at room ${player.room?.id}....`)
       let room = player.room
       if (room) {
-        const result = player.play()
+        const result = player.play(playerChoice)
         if (result) {
+          const bothPlayed = result.bothPlayed ? '1' : '0'
+          
           for (const player of room?.players) {
             this.send(player,`${Command.Play},` +
-            `${result.turn},` +
+            `${bothPlayed},` +
             `${result.winner}`)
           }
 
           if (result.winner != -1) {
-            this.rooms = this.rooms.filter(x => x.id != room?.id)
-            room = undefined
+            if (result.winner == 3)
+              console.log('draw!')
+            else
+              console.log(`player ${result.winner} wins this round`)
           }
         }
       } else {
@@ -232,7 +237,7 @@ export class ClientHandler {
             this.startGame(player)
             break
           case Command.Play:
-            this.play(player)
+            this.play(player, +eventData[1])
             break
           case Command.Pong:
             this.pong(player)

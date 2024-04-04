@@ -10,9 +10,9 @@ export class Player {
     this.ws = ws
   }
 
-  public play(): PlayResult | undefined {
+  public play(playerChoice: number): PlayResult | undefined {
     if (this.room) {
-      return this.room.play(this.id)
+      return this.room.play(this.id, playerChoice)
     }
   }
 }
