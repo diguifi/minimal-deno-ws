@@ -31,12 +31,21 @@ export class Game {
     }
       
     this.bothPlayed = this.played.length == 2
-    return new PlayResult(this.bothPlayed, this.calculateWinner())
+    let handPlayer1 = this.getHandPlayedByPlayer(0)
+    let handPlayer2 = this.getHandPlayedByPlayer(1)
+    return new PlayResult(handPlayer1, handPlayer2, this.calculateWinner())
   }
 
   public reset() {
     this.started = false
     this.played = []
+  }
+
+  private getHandPlayedByPlayer(playerId: number) {
+    let handPlayer = this.played.find(x => x.playedBy == playerId)
+    if (handPlayer)
+      return handPlayer.id
+    return -1
   }
 
   private calculateWinner(): number {

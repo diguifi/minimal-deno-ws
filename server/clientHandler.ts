@@ -57,7 +57,7 @@ export class ClientHandler {
       if (room) {
         room.startGame()
         for (const player of room?.players) {
-          this.send(player,`${Command.StartGame},0`)
+          this.send(player,`${Command.StartGame}`)
         }
       } else {
         console.log(`room ${player.room?.id} not found`)
@@ -76,11 +76,10 @@ export class ClientHandler {
       if (room) {
         const result = player.play(playerChoice)
         if (result) {
-          const bothPlayed = result.bothPlayed ? '1' : '0'
-          
           for (const player of room?.players) {
             this.send(player,`${Command.Play},` +
-            `${bothPlayed},` +
+            `${result.handPlayer1},` +
+            `${result.handPlayer2},` +
             `${result.winner}`)
           }
 
